@@ -37,11 +37,13 @@ export default class SelectRoleScreen extends Component{
         style={styles.backgroundImage}
         blurRadius={1}>
         <View style={styles.appContainer}>
+          {/*
           <Icon
             name="arrow-left" size={20} color="white" type='font-awesome'
             style= {{marginTop: wp('-12%'), marginLeft: wp('-83%')}}
             onPress={() => navigate('Index')} 
           />
+          */}
           <Text style={styles.appTitle}>AT-TAREEQ</Text>
           <Text style={styles.appSubTitle}>Please Select Role</Text>
           <Button
@@ -91,11 +93,11 @@ const styles = StyleSheet.create({
   appSubTitle:{
     fontSize: wp('5.56%'),
     color: '#fff',
-    fontFamily: 'sans-serif-medium',
+    fontFamily: 'Helvetica Neue',
     marginTop: wp('25%')
   },
   userButtonTitle:{
-    fontFamily:'Roboto', 
+    fontFamily:'Arial', 
     color:'#fff'
   },
   userButton: {
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     
   },
   adminButtonTitle:{
-    fontFamily:'Roboto', 
+    fontFamily:'Arial', 
     color:'#fff',
   },
   adminButton:{
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
     marginTop: wp('6%') 
   },
   gobackButtonTitle:{
-    fontFamily:'Roboto', 
+    fontFamily:'Arial', 
     color:'#fff',
   },
   gobackButton:{

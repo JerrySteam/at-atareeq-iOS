@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground, StyleSheet, Image, ScrollView, FlatList, ActivityIndicator } from 'react-native';
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { Card, ListItem, Button, Avatar } from 'react-native-elements'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,10 +11,17 @@ class SpecialLecture extends Component {
       <View style={styles.favouriteRTWrapper}>
         <View style={styles.favouriteRTContainer}>
           <View style={styles.favouriteRTThumbnailContainer}>
+            {/*
             <Image
               source={{ uri: this.props.thumbnail }}
               style={styles.favouriteRTThumbnail}
               PlaceholderContent={<ActivityIndicator />}
+            />
+            */}
+            <Avatar
+              size={wp('22%')}
+              rounded
+              source={{ uri: this.props.thumbnail }}
             />
           </View>
           <View style={styles.favouriteRTContent}>
@@ -27,13 +34,13 @@ class SpecialLecture extends Component {
         <Button
           buttonStyle={styles.favouriteRTRemoveButton}
           title='REMOVE'
-          onPress = {() => this.props.removeFavourite(this.props.lectureid)}
+          onPress={() => this.props.removeFavourite(this.props.lectureid)}
         />
       </View>
     );
   }
 
-  
+
 }
 class LectureScreen extends Component {
   constructor(props) {
@@ -44,53 +51,55 @@ class LectureScreen extends Component {
       refreshing: false,
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     this.loadInitialState().done();
   }
 
-  loadInitialState = async () =>{
+  loadInitialState = async () => {
     //Get username from AsyncStorage
     const routineTaleems = await this.getSpecialLecture();
     this.setState({
-      routineTaleems:routineTaleems,
+      routineTaleems: routineTaleems,
       loading: false,
       refreshing: false,
     });
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     this.loadInitialState().done;
   }
 
   keyExtractor = (item, index) => index.toString()
   renderItem = ({ item }) => (
-    <SpecialLecture 
+    <SpecialLecture
       thumbnail={item.speakerphotourl}
-      speaker={item.speaker} 
+      speaker={item.speaker}
       title={item.topic}
-      location={item.location} 
-      date={item.dayordate} 
+      location={item.location}
+      date={item.dayordate}
       time={item.time}
       lectureid={item.lectureid}
-      removeFavourite = {this.removeFavourite}
+      removeFavourite={this.removeFavourite}
     />
   )
   render() {
-    if(this.state.loading) { 
+    if (this.state.loading) {
       return (
-      	<ActivityIndicator size="large" color="#e2e2e2" style={{flex: 1,
+        <ActivityIndicator size="large" color="#e2e2e2" style={{
+          flex: 1,
           justifyContent: 'center',
-          alignItems: 'center',}}/>
-      ); 
+          alignItems: 'center',
+        }} />
+      );
     }
 
     if (!this.state.routineTaleems.success) {
       return (
-        <View style={{alignItems:'center', marginTop: wp('50%')}}>
+        <View style={{ alignItems: 'center', marginTop: wp('50%') }}>
           <Text>{this.state.routineTaleems.message}</Text>
           <TouchableOpacity onPress={() => this.onRefresh()}>
-            <Text>Refresh</Text>
+            <Text>Click to Refresh</Text>
           </TouchableOpacity>
         </View>
       )
@@ -101,13 +110,13 @@ class LectureScreen extends Component {
         data={this.state.routineTaleems.message}
         renderItem={this.renderItem}
         numColumns={2}
-        refreshing = {this.state.refreshing}
-        onRefresh = {() => this.onRefresh()}
+        refreshing={this.state.refreshing}
+        onRefresh={() => this.onRefresh()}
       />
     );
   }
 
-  getSpecialLecture = async() => {
+  getSpecialLecture = async () => {
     const apiurl = global.url + 'favouritespeciallectures.php';
     const userid = await retrieveData('userid');
 
@@ -132,7 +141,7 @@ class LectureScreen extends Component {
     }
   }
 
-  removeFavourite = async(lectureid) => {
+  removeFavourite = async (lectureid) => {
     const apiurl = global.url + 'removefavourite.php';
     const userid = await retrieveData('userid');
     try {
@@ -191,7 +200,7 @@ const styles = StyleSheet.create({
   favouriteRTSpeaker: {
     fontSize: wp('3%'),
     color: '#fff',
-    textTransform:'uppercase',
+    textTransform: 'uppercase',
     paddingBottom: wp('1%'),
   },
   favouriteRTTitle: {

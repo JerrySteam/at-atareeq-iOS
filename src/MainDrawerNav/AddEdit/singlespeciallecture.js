@@ -3,7 +3,8 @@ import { StyleSheet, View, KeyboardAvoidingView, ScrollView, } from 'react-nativ
 import { Button, Input, Avatar, Icon } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import DatePicker from 'react-native-datepicker';
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker'; 
+import * as Permissions from 'expo-permissions';
 
 export default class SingleSpecialLecture extends Component {
   constructor(props) {
@@ -124,10 +125,10 @@ export default class SingleSpecialLecture extends Component {
     );
   }
 
-  selectPhoto = async () => {
+  /* selectPhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 4],
       quality: 1
     });
@@ -137,12 +138,35 @@ export default class SingleSpecialLecture extends Component {
     if (!result.cancelled) {
       this.setState({ photourl: result.uri });
     } else {
-      this.setState({ photourl: null });
+      this.setState({ photourl: '' });
+    }
+  } */
+
+  selectPhoto = async () => {
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false,
+        aspect: [4, 4],
+        quality: 1
+      });
+  
+      //console.log("Image Picker Log: " + result.uri);
+  
+      if (!result.cancelled) {
+        this.setState({ photourl: result.uri });
+      } else {
+        this.setState({ photourl: '' });
+      }
+    } else {
+      alert('Camera permission not granted');
+      this.setState({ photourl: '' });
     }
   }
-
+  
   deletePhoto = async () => {
-    this.setState({ photourl: null });
+    this.setState({ photourl: '' });
   }
 
   updateSpecialLecture = async () => {
@@ -176,7 +200,7 @@ export default class SingleSpecialLecture extends Component {
       formData.append('time', time)
       formData.append('briefinfo', briefinfo)
 
-      if (photourl !== null) {
+      if (photourl !== '') {
         const uriPart = photourl.split('.');
         const fileExtension = uriPart[uriPart.length - 1];
         let photoname = 'photo' + new Date().getTime();
@@ -189,39 +213,40 @@ export default class SingleSpecialLecture extends Component {
       } else {
         formData.append('photo', photourl)
       }
+      setTimeout( async() => {
+        try {
+          const response = await fetch(apiurl, {
+            //handle post data
+            method: 'POST',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            body: formData
+          });
 
-      try {
-        const response = await fetch(apiurl, {
-          //handle post data
-          method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          body: formData
-        });
-
-        //const res = await response.text();
-        //console.log(res)
-        //this.setState({ isLoading: false })
-        const res = await response.json();
-        alert(res.message)
-        if (res.success) {
-          this.setState({
-            title: '',
-            speaker: '',
-            location: '',
-            date: null,
-            time: '',
-            briefinfo: '',
-            photourl: null,
-          })
+          //const res = await response.text();
+          //console.log(res)
+          //this.setState({ isLoading: false })
+          const res = await response.json();
+          alert(res.message)
+          if (res.success) {
+            this.setState({
+              title: '',
+              speaker: '',
+              location: '',
+              date: null,
+              time: '',
+              briefinfo: '',
+              photourl: '',
+            })
+          }
+          this.setState({ isLoading: false })
         }
-        this.setState({ isLoading: false })
-      }
-      catch (err) {
-        console.log(err);
-        this.setState({ isLoading: false })
-      }
+        catch (err) {
+          console.log(err);
+          this.setState({ isLoading: false })
+        }
+      }, 100)
     }
   }
 }
@@ -238,7 +263,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

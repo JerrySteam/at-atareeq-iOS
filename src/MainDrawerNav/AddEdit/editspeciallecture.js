@@ -59,7 +59,7 @@ class EditSpecialLecture extends Component {
               date={item.dayordate} 
               time={item.time} 
             />}
-          leftAvatar={{ source: { uri: item.speakerphotourl }, size: wp('24%'), imageProps: { borderRadius: wp('100%') } }}
+          leftAvatar={{ source: { uri: item.speakerphotourl }, size: wp('24%')}}
           containerStyle={{ backgroundColor: 'transparent', padding: wp('2.5%'), }}
           onPress={() => this.props.navigation.navigate('SingleSpecialLecture', {
             lectureid: item.lectureid,
@@ -89,7 +89,7 @@ class EditSpecialLecture extends Component {
         <View style={{alignItems:'center', marginTop: wp('50%')}}>
           <Text>{this.state.specialLectures.message}</Text>
           <TouchableOpacity onPress={() => this.onRefresh()}>
-            <Text>Refresh</Text>
+            <Text>Click to Refresh</Text>
           </TouchableOpacity>
         </View>
       )

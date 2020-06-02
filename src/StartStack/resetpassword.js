@@ -52,6 +52,7 @@ export default class ResetPasswordScreen extends Component {
           <ScrollView contentContainerStyle={{ alignItems: "center", paddingVertical: wp('12%') }}>
             <Input
               placeholder='Code sent to your email'
+              placeholderTextColor='gray'
               leftIcon={{ type: 'font-awesome', name: 'envelope', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
               containerStyle={{ width: wp('83%'), marginTop: wp('14%') }}
@@ -60,6 +61,7 @@ export default class ResetPasswordScreen extends Component {
             />
             <Input
               placeholder='New Password'
+              placeholderTextColor='gray'
               secureTextEntry={true}
               leftIcon={{ type: 'font-awesome', name: 'envelope', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
@@ -75,6 +77,7 @@ export default class ResetPasswordScreen extends Component {
             />
             <Input
               placeholder='Confirm New Password'
+              placeholderTextColor='gray'
               secureTextEntry={true}
               leftIcon={{ type: 'font-awesome', name: 'envelope', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

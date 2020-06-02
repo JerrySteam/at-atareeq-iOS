@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Button } from 'react-native';
 import MapView from 'react-native-maps';
 import Polyline from '@mapbox/polyline';
-import * as Permissions from 'expo-permissions';
-import Geolocation from 'react-native-geolocation-service';
+//import * as Permissions from 'expo-permissions';
+//import Geolocation from 'react-native-geolocation-service';
 
 //just sublime: latitude, longtitude and destination title. Dont touch anything
 class MapViewScreen extends Component {
@@ -17,8 +17,10 @@ class MapViewScreen extends Component {
       concat: null,
       coords: [],
       x: 'false',
-      cordLatitude: parseFloat(this.props.navigation.getParam('cordLatitude', 0)),
-      cordLongitude: parseFloat(this.props.navigation.getParam('cordLongitude', 0)),
+      //cordLatitude: parseFloat(this.props.navigation.getParam('cordLatitude', 0)),
+      //cordLongitude: parseFloat(this.props.navigation.getParam('cordLongitude', 0)),
+      cordLatitude: this.props.navigation.getParam('cordLatitude', 0),
+      cordLongitude: this.props.navigation.getParam('cordLongitude', 0),
       destination: this.props.navigation.getParam('destination', "Lecture venue"),
     }
 
@@ -75,7 +77,6 @@ class MapViewScreen extends Component {
       this.setState({ x: "true" })
       return coords
     } catch (error) {
-      console.log('masuk fungsi')
       this.setState({ x: "error" })
       return error
     }
@@ -165,9 +166,6 @@ class MapViewScreen extends Component {
       longitudeDelta: deltaY
     };
   }
-
-
-
 }
 
 const styles = StyleSheet.create({

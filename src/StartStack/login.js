@@ -62,6 +62,7 @@ export default class LoginScreen extends Component {
           <Text style={styles.appSubTitle}>Log into your account</Text>
           <Input
             placeholder='Email/Phone No'
+            placeholderTextColor = 'gray'
             leftIcon={{ type: 'font-awesome', name: 'user', size: wp('7%'), color: 'gray' }}
             inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
             containerStyle={{ width: wp('83%'), marginTop: wp('16%') }}
@@ -70,6 +71,7 @@ export default class LoginScreen extends Component {
           />
           <Input
             placeholder='Password'
+            placeholderTextColor = 'gray'
             secureTextEntry={true}
             leftIcon={{ type: 'font-awesome', name: 'lock', size: wp('7%'), color: 'gray' }}
             inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%') }}
@@ -204,7 +206,8 @@ export default class LoginScreen extends Component {
 
   rememberUser = async () => {
     try {
-      await AsyncStorage.setItem('RMEU', this.state.username);
+      //await AsyncStorage.setItem('RMEU', this.state.username);
+      await storeData('RMEU', this.state.username);
       console.log(await AsyncStorage.getItem('RMEU'));
     } catch (error) {
       // Error saving data
@@ -232,7 +235,6 @@ export default class LoginScreen extends Component {
     }
   };
 
-
   toggleKeepLoggedin = value => {
     this.setState({ loggedIn: value })
     if (value === true) {
@@ -244,7 +246,8 @@ export default class LoginScreen extends Component {
 
   keepLoggedin = async () => {
     try {
-      await AsyncStorage.setItem('RLGN', this.state.username);
+      //await AsyncStorage.setItem('RLGN', this.state.username);
+      await storeData('RLGN', this.state.username);
       console.log(await AsyncStorage.getItem('RLGN'));
     } catch (error) {
       // Error saving data
@@ -273,17 +276,17 @@ export default class LoginScreen extends Component {
   };
 
   signInWithGoogleAsync = async () => {
-    console.log('clicked')
     try {
       const result = await Google.logInAsync({
         androidClientId: '270580670630-2mbc4h600q94cieu5ffrmigieph9rsej.apps.googleusercontent.com',
         androidStandaloneAppClientId: '270580670630-4obsijgkfn3inm9n7htp91vgffqcfpej.apps.googleusercontent.com',
-        scopes: ['profile', 'email'],
+        iosClientId: '270580670630-afghs82ataduqvadjohbpguier0ngrup.apps.googleusercontent.com',
+        iosStandaloneAppClientId:'270580670630-3kgt55rm71d2bf0qmfkruf66dt5k8cg1.apps.googleusercontent.com',
+        scopes: ['profile', 'email'], 
       });
 
       if (result.type === 'success') {
         this.setState({ isReady: false });
-        console.log("token: ", result.accessToken);
         const user = result.user;
         await storeData('accesstoken', result.accessToken);
         await storeData('userid', user.id);
@@ -306,9 +309,10 @@ export default class LoginScreen extends Component {
 
   handleFacebookLogin = async () => {
     try {
+      await Facebook.initializeAsync('2686580851427611');
       const { type, token } = await Facebook.logInWithReadPermissionsAsync(
         '2686580851427611', // Replace with your own app id in standalone app
-        { permissions: ['public_profile', 'email'] }
+        {permissions: ['public_profile', 'email']}
       );
 
       switch (type) {
@@ -349,10 +353,10 @@ export default class LoginScreen extends Component {
         }
       }
     } catch (e) {
-      alert(e)
+      //alert(e)
+      console.log(e)
     }
   };
-
 }
 
 const styles = StyleSheet.create({
@@ -375,11 +379,11 @@ const styles = StyleSheet.create({
   appSubTitle: {
     fontSize: wp('6%'),
     color: '#fff',
-    fontFamily: 'sans-serif-medium',
+    fontFamily: 'Helvetica Neue',
     marginTop: wp('-25%')
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {
@@ -394,12 +398,12 @@ const styles = StyleSheet.create({
   forgotPassword: {
     fontSize: wp('4%'),
     color: '#fff',
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     marginBottom: wp('6%'),
   },
   socialSignIn: {
-    fontSize: wp('5%'),
+    fontSize: wp('3%'),
     color: '#fff',
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
   },
 });

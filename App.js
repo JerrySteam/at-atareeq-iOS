@@ -20,6 +20,7 @@ import UserSignupScreen from './src/CreateAccountStack/usersignup';
 import MainDrawerNav from './src/MainDrawerNav'
 
 //console.ignoredYellowBox = ["Warning: Can't"];
+console.disableYellowBox = true;
 
 const LoginStack = createStackNavigator({
   Login: {screen: LoginScreen,},
@@ -32,7 +33,7 @@ const AccountStack = createStackNavigator({
   AdminSignup: {screen: AdminSignupScreen,},
   UserSignup: {screen: UserSignupScreen,},
 },{headerMode: 'screen'});
-
+ 
 const MainNavigator = createSwitchNavigator({
   Index: IndexScreen,
   LoginNavigator: LoginStack,

@@ -1,0 +1,208 @@
+====================================================================
+package.json
+
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "@mapbox/polyline": "^1.1.0",
+    "@react-native-community/datetimepicker": "^2.1.0",
+    "@react-native-community/geolocation": "^1.4.2",
+    "accordion-collapse-react-native": "^0.2.6",
+    "datetimepicker": "^0.1.39",
+    "expo": "^35.0.0",
+    "expo-constants": "~7.0.0",
+    "expo-facebook": "~7.0.0",
+    "expo-font": "~7.0.0",
+    "expo-google-app-auth": "^8.0.0",
+    "expo-google-sign-in": "~7.0.0",
+    "expo-image-picker": "~7.0.0",
+    "expo-permissions": "~7.0.0",
+    "lodash": "^4.17.15",
+    "native-base": "^2.13.8",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native-android-native-picker": "git+https://github.com/sleighdogs/react-native-android-native-picker.git#master",
+    "react-native-calendars": "^1.214.0",
+    "react-native-datepicker": "^1.7.2",
+    "react-native-divider": "^1.0.3",
+    "react-native-elements": "^1.2.7",
+    "react-native-fbsdk": "0.6.0",
+    "react-native-geolocation-service": "^3.1.0",
+    "react-native-gesture-handler": "^1.3.0",
+    "react-native-google-signin": "2.1.1",
+    "react-native-image-picker": "^1.1.0",
+    "react-native-maps": "^0.26.1",
+    "react-native-picker-select": "^6.3.3",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-responsive-screen": "^1.3.0",
+    "react-native-simple-accordian": "^1.0.2",
+    "react-native-web": "^0.11.7",
+    "react-navigation": "^4.0.10",
+    "react-navigation-drawer": "^2.3.3",
+    "react-navigation-stack": "^1.10.3",
+    "react-navigation-tabs": "^2.6.0"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^7.1.0"
+  },
+  "private": true,
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  }
+}
+
+====================================================================
+
+
+===================================================================
+App.json
+
+
+{
+  "expo": {
+    "name": "At-tareeq-iOS",
+    "slug": "At-tareeq-iOS",
+    "privacy": "public",
+    "sdkVersion": "35.0.0",
+    "android":{
+      "package": "com.hochenmu.attareeqios",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyByKge0hMAWkkHSXBJPyE4mg8DabFaGYnY"
+        },
+        "googleSignIn": {
+          "apiKey": "AIzaSyByKge0hMAWkkHSXBJPyE4mg8DabFaGYnY",
+          "certificateHash": "388072DF05E7E0EA9C4ADF93EFD054C6C494F74A"
+        }
+      },
+      "versionCode": 1,
+      "permissions": [
+	      "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION"
+    	] 
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {  
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hochenmu.attareeqios",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "For choosing a photo.",
+        "NSCameraUsageDescription": "For taking a photo.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "For location."
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "description": "",
+    "facebookScheme": "fb2686580851427611",
+    "facebookAppId": "2686580851427611",
+    "facebookDisplayName":"At-tareeq"
+  }
+}
+
+====================================================================
+
+
+======================================================
+Previous package versions before upgrade
+
+C:\Users\USER\Desktop\At-tareeq-iOS>expo-cli --version
+3.20.1
+
+C:\Users\USER\Desktop\At-tareeq-iOS>expo --version
+3.20.1
+
+C:\Users\USER\Desktop\At-tareeq-iOS>react-native --version
+react-native-cli: 2.0.1
+react-native: 0.59.8
+
+C:\Users\USER\Desktop\At-tareeq-iOS>
+
+=================================================================
+
+====================================================================
+Output after upgrade
+
+C:\Users\USER\Desktop\At-tareeq-iOS>expo upgrade
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│   There is a new version of expo-cli available (3.20.9).                │
+│   You are currently using expo-cli 3.20.1                               │
+│   Install expo-cli globally using the package manager of your choice;   │
+│   for example: `npm install -g expo-cli` to get the latest version      │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+We couldn't find a git repository in your project directory.
+It's recommended to back up your project before proceeding.
+
+? Would you like to proceed? Yes
+
+We found an existing expo-cli instance running for this project and closed it to continue.
+
+? You are currently using SDK 35.0.0. Would you like to update to the latest version, 37.0.0? Yes
+
+? You might have to upgrade your Android client. Before you can do that, you have to run the emulator, or plug a device in. Do you want to upgrade it now? No
+
+√ Installed expo@^37.0.0   
+√ Removed deprecated sdkVersion field from app.json.
+√ No additional changes necessary to app.json config.
+√ Updated known packages to compatible versions.
+√ Removed package-lock.json and deleted node_modules.
+× Running npm install failed. Please check npm-error.log for more information.
+× Failed to clear packager cache with error: Can't read JSON file: C:\Users\USER\Desktop\At-tareeq-iOS\node_modules\expo\package.json
+└─ Cause: Error: ENOENT: no such file or directory, open 'C:\Users\USER\Desktop\At-tareeq-iOS\node_modules\expo\package.json'
+√ Cleared packager cache.
+
+� Automated upgrade steps complete.
+...but this doesn't mean everything is done yet!
+
+✅ The following packages were updated:
+expo-constants, expo-facebook, expo-font, expo-google-sign-in, expo-image-picker, expo-permissions, react-native-gesture-handler, react-native-maps, react-native-reanimated, @react-native-community/datetimepicker, react-native, react, react-dom, react-native-web, babel-preset-expo, expo
+
+� The following packages were not updated. You should check the READMEs for those repositories to determine what version is compatible with your new set 
+of packages:
+@mapbox/polyline, @react-native-community/geolocation, accordion-collapse-react-native, datetimepicker, expo-google-app-auth, lodash, native-base, react-native-android-native-picker, react-native-calendars, react-native-datepicker, react-native-divider, react-native-elements, react-native-fbsdk, react-native-geolocation-service, react-native-google-signin, react-native-image-picker, react-native-picker-select, react-native-responsive-screen, react-native-simple-accordian, react-navigation, react-navigation-drawer, react-navigation-stack, react-navigation-tabs
+
+Please refer to the release notes for information on any further required steps to update and information about breaking changes:
+https://dev.to/expo/expo-sdk-37-is-now-available-69g
+
+You should also look at the breaking changes from a release that you skipped:
+- https://blog.expo.io/expo-sdk-36-is-now-available-b91897b437fe
+
+C:\Users\USER\Desktop\At-tareeq-iOS>
+
+
+
+
+

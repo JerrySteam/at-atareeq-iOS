@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: wp('100%'),
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

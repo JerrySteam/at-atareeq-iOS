@@ -79,11 +79,7 @@ class LectureDescScreen extends Component {
                 name='map-marker' 
                 color='purple' 
                 type='font-awesome'
-                onPress={() => this.props.navigation.navigate('MapView',{
-                  cordLatitude: this.state.latitude,
-                  cordLongitude: this.state.longitude,
-                  destination: this.state.location,
-                })}  
+                onPress={() => this.onMapViewPress(this.props.navigation)}  
               />
               <Icon  
                 name={this.state.isNotification ? 'volume-up':'volume-off'}
@@ -108,6 +104,22 @@ class LectureDescScreen extends Component {
         </View>
       </ImageBackground>
     );
+  }
+
+  onMapViewPress = async(navigation) =>{
+    var cordLatitude = this.state.latitude
+    var cordLongitude = this.state.longitude
+    var destination = this.state.location
+
+    if (isNaN(cordLatitude) || isNaN(cordLongitude) || cordLatitude == 0 || cordLongitude == 0) {
+      alert("Map view location not available for this lecture.")
+    } else {
+      navigation.navigate('MapView',{
+        cordLatitude: this.state.latitude,
+        cordLongitude: this.state.longitude,
+        destination: destination,
+      })
+    }
   }
 
   isFavourite = async() =>{
@@ -204,7 +216,6 @@ class LectureDescScreen extends Component {
       return console.log(err);
     }
   }
-
 
   isNotification = async() =>{
     const apiurl = global.url + 'isnotification.php';

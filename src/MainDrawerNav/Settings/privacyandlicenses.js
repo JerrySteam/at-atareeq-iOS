@@ -19,10 +19,8 @@ class PrivacyandLicenses extends Component {
           <Text style={styles.text}>For a better experience, while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to Photo, Full names, Phone number, Email address, Location. The information that we request will be retained by us and used as described in this privacy policy.</Text>
           <Text style={styles.text}>The app does use third party services that may collect information used to identify you.</Text>
           <Text style={styles.text}>Link to privacy policy of third party service providers used by the app</Text>
-          <Text style={styles.list}>- Google Play Services</Text>
+          <Text style={styles.list}>- Google</Text>
           <Text style={styles.list}>- Facebook</Text>
-          <Text style={styles.list}>- Twitter</Text>
-          <Text style={styles.list}>- LinkedIn</Text>
           
           <Text style={styles.text} h4>Log Data</Text>
           <Text style={styles.text}>We want to inform you that whenever you use our Service, in a case of an error in the app we collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing our Service, the time and date of your use of the Service, and other statistics.</Text>
@@ -64,12 +62,12 @@ const styles = StyleSheet.create({
     marginVertical: wp('1.3%'),
     paddingHorizontal: wp('4%'),
     fontSize: wp('4%'),
-    fontFamily: 'sans-serif-light',
+    fontFamily: 'Helvetica-Light',
   },
   list: {
     paddingHorizontal: wp('6%'),
     fontSize: wp('3.2%'),
-    fontFamily: 'sans-serif-light',
+    fontFamily: 'Helvetica-Light',
   }
 });
 

@@ -15,7 +15,7 @@ class Home extends Component {
       phone: null,
       email: null,
       location: null,
-      photourl: null,
+      photourl: '',
       isLoading: false,
       mosquelocation: null,
       mosquename: null,
@@ -477,12 +477,12 @@ const styles = StyleSheet.create({
   },
   cardButtonTitle: {
     color: '#000',
-    fontFamily: 'sans-serif-light',
+    fontFamily: 'Helvetica-Light',
     fontWeight: 'normal'
   },
   settingsText: {
     fontSize: wp('4%'),
-    fontFamily: 'sans-serif-light',
+    fontFamily: 'Helvetica-Light',
   },
   notificationContainer: {
     flex: 1,

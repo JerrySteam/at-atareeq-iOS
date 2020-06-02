@@ -58,7 +58,7 @@ class EditRoutineTaleem extends Component {
               weekday={item.dayordate} 
               time={item.time} 
             />}
-          leftAvatar={{ source: { uri: item.speakerphotourl }, size: wp('24%'), imageProps: { borderRadius: wp('100%') } }}
+          leftAvatar={{ source: { uri: item.speakerphotourl }, size: wp('24%')}}
           containerStyle={{ backgroundColor: 'transparent', padding: wp('2.5%'), }}
           onPress={() => this.props.navigation.navigate('SingleRoutineTaleem', {
             lectureid: item.lectureid,
@@ -88,7 +88,7 @@ class EditRoutineTaleem extends Component {
         <View style={{alignItems:'center', marginTop: wp('50%')}}>
           <Text>{this.state.routineTaleem.message}</Text>
           <TouchableOpacity onPress={() => this.onRefresh()}>
-            <Text>Refresh</Text>
+            <Text>Click to Refresh</Text>
           </TouchableOpacity>
         </View>
       )

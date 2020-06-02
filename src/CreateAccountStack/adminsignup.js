@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView, ScrollView, Picker } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView, ScrollView, Picker, Alert } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Button, Input, SocialIcon, Avatar } from 'react-native-elements';
@@ -8,6 +8,7 @@ import Divider from 'react-native-divider';
 import * as ImagePicker from 'expo-image-picker';
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
+import * as Permissions from 'expo-permissions';
 
 export default class AdminSignupScreen extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class AdminSignupScreen extends Component {
       mosquename: '',
       mosquecat: '',
       isLoading: false,
-      photourl: null,
+      photourl: '',
     };
   }
   async componentDidMount() {
@@ -36,7 +37,7 @@ export default class AdminSignupScreen extends Component {
   static navigationOptions = {
     title: 'Admin Sign Up',
     headerTitleStyle: {
-      fontSize: wp('6%'),
+      fontSize: wp('4%'),
       color: '#fff'
     },
     headerTransparent: true,
@@ -75,6 +76,7 @@ export default class AdminSignupScreen extends Component {
 
             <Input
               placeholder='Name'
+              placeholderTextColor='gray'
               leftIcon={{ type: 'font-awesome', name: 'user', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
               containerStyle={{ width: wp('95%'), marginTop: wp('4%') }}
@@ -83,6 +85,7 @@ export default class AdminSignupScreen extends Component {
             />
             <Input
               placeholder='Phone Number'
+              placeholderTextColor='gray'
               keyboardType='numeric'
               maxLength={20}
               leftIcon={{ type: 'font-awesome', name: 'phone', size: wp('5%'), color: 'gray' }}
@@ -93,6 +96,7 @@ export default class AdminSignupScreen extends Component {
             />
             <Input
               placeholder='Email'
+              placeholderTextColor='gray'
               leftIcon={{ type: 'font-awesome', name: 'envelope', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
               containerStyle={{ width: wp('95%'), marginTop: wp('5%') }}
@@ -101,6 +105,7 @@ export default class AdminSignupScreen extends Component {
             />
             <Input
               placeholder='Location'
+              placeholderTextColor='gray'
               leftIcon={{ type: 'font-awesome', name: 'map-pin', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
               containerStyle={{ width: wp('95%'), marginTop: wp('5%') }}
@@ -109,6 +114,7 @@ export default class AdminSignupScreen extends Component {
             />
             <Input
               placeholder='Password'
+              placeholderTextColor='gray'
               secureTextEntry={true}
               leftIcon={{ type: 'font-awesome', name: 'lock', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%') }}
@@ -124,6 +130,7 @@ export default class AdminSignupScreen extends Component {
             />
             <Input
               placeholder='Confirm Password'
+              placeholderTextColor='gray'
               secureTextEntry={true}
               leftIcon={{ type: 'font-awesome', name: 'lock', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%') }}
@@ -138,22 +145,23 @@ export default class AdminSignupScreen extends Component {
 
             <Picker
               selectedValue={this.state.mosquecat}
-              placeholder="placeholder"
-              leftIcon={{ type: 'font-awesome', name: 'lock', size: wp('5%'), color: 'gray' }}
-              style={{ height: hp('10%'), width: wp('95%'), borderColor: 'gray', color: '#fff', marginTop: wp('3%') }}
+              leftIcon={{type: 'font-awesome', name: 'lock', size: wp('5%'), color: 'gray'}}
+              style={{width: wp('95%'), borderColor: 'white', color: '#fff'}}
+              itemStyle = {{color:'#fff', fontSize: wp('4.5%'), }}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ mosquecat: itemValue })
               }>
-              <Picker.Item label="Select an item..." value="" />
+              <Picker.Item label="Select Registration Category..." value="" />
               <Picker.Item label="Mosque" value="1" />
               <Picker.Item label="Organization" value="2" />
             </Picker>
 
             <Input
-              placeholder='Add Mosque/Organization'
+              placeholder='Mosque/Organization Description'
+              placeholderTextColor='gray'
               leftIcon={{ type: 'font-awesome', name: 'globe', size: wp('5%'), color: 'gray' }}
               inputStyle={{ color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'), }}
-              containerStyle={{ width: wp('95%'), marginTop: wp('2%') }}
+              containerStyle={{ width: wp('95%')}}
               onChangeText={input => this.setState({ mosquename: input })}
               value={this.state.mosquename}
             />
@@ -198,28 +206,26 @@ export default class AdminSignupScreen extends Component {
   }
 
   selectPhoto = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ photourl: result.uri });
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false,
+        aspect: [4, 4],
+        quality: 1
+      });
+  
+      console.log("Image Picker Log: " + result.uri);
+  
+      if (!result.cancelled) {
+        this.setState({ photourl: result.uri });
+      } else {
+        this.setState({ photourl: '' });
+      }
     } else {
-      this.setState({ photourl: null });
+      console.log('Camera permission not granted');
+      this.setState({ photourl: '' });
     }
-
-    /**Object {
-        "cancelled": false,
-        "height": 300,
-        "type": "image",
-        "uri": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FAt-tareeq-9c8ca735-1a6e-4eb7-9eda-596b32d76f64/ImagePicker/060bef63-45da-4c72-a4d3-4d666ee517f7.jpg",
-        "width": 400,
-      } */
   }
 
   createAccount = async () => {
@@ -260,7 +266,7 @@ export default class AdminSignupScreen extends Component {
       const apiurl = global.url + 'adminsignup.php'
       const formData = new FormData()
 
-      if (photourl !== null) {
+      if (photourl !== '') {
         //Add your input data
         formData.append('fullname', fullname)
         formData.append('phone', phone)
@@ -323,7 +329,7 @@ export default class AdminSignupScreen extends Component {
   }
 
   deletePhoto = async () => {
-    this.setState({ photourl: null });
+    this.setState({ photourl: '' });
   }
 
   isValidEmail(email) {
@@ -337,17 +343,17 @@ export default class AdminSignupScreen extends Component {
   }
 
   signInWithGoogleAsync = async () => {
-    console.log('clicked')
     try {
       const result = await Google.logInAsync({
         androidClientId: '270580670630-2mbc4h600q94cieu5ffrmigieph9rsej.apps.googleusercontent.com',
         androidStandaloneAppClientId: '270580670630-4obsijgkfn3inm9n7htp91vgffqcfpej.apps.googleusercontent.com',
+        iosClientId: '270580670630-afghs82ataduqvadjohbpguier0ngrup.apps.googleusercontent.com',
+        iosStandaloneAppClientId:'270580670630-3kgt55rm71d2bf0qmfkruf66dt5k8cg1.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       });
 
       if (result.type === 'success') {
         this.setState({ isReady: false });
-        console.log("token: ", result.accessToken);
         const user = result.user;
         await storeData('accesstoken', result.accessToken);
         await storeData('userid', user.id);
@@ -370,6 +376,7 @@ export default class AdminSignupScreen extends Component {
 
   handleFacebookLogin = async () => {
     try {
+      await Facebook.initializeAsync('2686580851427611');
       const { type, token } = await Facebook.logInWithReadPermissionsAsync(
         '2686580851427611', // Replace with your own app id in standalone app
         { permissions: ['public_profile', 'email'] }
@@ -413,7 +420,8 @@ export default class AdminSignupScreen extends Component {
         }
       }
     } catch (e) {
-      alert(e)
+      //alert(e)
+      console.log(e)
     }
   };
 }
@@ -438,11 +446,11 @@ const styles = StyleSheet.create({
   appSubTitle: {
     fontSize: wp('5.56%'),
     color: '#fff',
-    fontFamily: 'sans-serif-medium',
+    fontFamily: 'Helvetica Neue',
     marginTop: wp('35%')
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {
@@ -454,12 +462,12 @@ const styles = StyleSheet.create({
   forgotPassword: {
     fontSize: wp('5%'),
     color: '#fff',
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     marginBottom: wp('6%'),
   },
   socialSignIn: {
-    fontSize: wp('5%'),
+    fontSize: wp('3%'),
     color: '#fff',
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
   },
 });

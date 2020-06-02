@@ -83,11 +83,12 @@ const styles = StyleSheet.create({
   appSubTitle:{
     fontSize: wp('5.56%'),
     color: '#fff',
-    fontFamily: 'sans-serif-thin',
+    fontFamily: 'Helvetica',
+    //fontFamily: 'Helvetica',
   },
 
   loginButtonTitle:{
-    fontFamily:'Roboto', 
+    fontFamily:'Arial', 
     color:'#fff'
   },
 
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     
   },
   createAccountButtonTitle:{
-    fontFamily:'Roboto', 
+    fontFamily:'Arial', 
     color:'#fff'
   },
   createAccountButton:{

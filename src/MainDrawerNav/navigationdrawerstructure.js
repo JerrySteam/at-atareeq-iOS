@@ -29,7 +29,7 @@ export class HomeSearchButton extends React.Component {
         type='outline'
         icon={<Icon name="search" size={wp('3.5%')} color="white"/>}
         title=" Search for lectures, speakers, mosques..."
-        titleStyle={{color: '#fff', fontSize: wp('3.5%'), fontFamily: 'sans-serif-thin',}}
+        titleStyle={{color: '#fff', fontSize: wp('3.5%'), fontFamily: 'Helvetica',}}
         buttonStyle={{width: wp('80%'), borderRadius: wp('7%'), borderColor:'#fff',}}
         //onPress={() => navigate('Search')}
       />

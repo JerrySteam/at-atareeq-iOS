@@ -62,8 +62,8 @@ class LectureScreen extends Component {
               time={item.time} 
             />
           }
-          leftAvatar={{ source: { uri: item.speakerphotourl }, size: wp('24%'), imageProps: { borderRadius: wp('100%'),} }}
-          containerStyle={{ backgroundColor: 'transparent', padding: wp('2.5%'), }}
+          leftAvatar={{ source: { uri: item.speakerphotourl }, size: wp('24%')}}
+          containerStyle={{ backgroundColor: 'transparent', padding: wp('2.5%')}}
           onPress={() => this.props.navigation.navigate('LectureDescription', {
             lectureid: item.lectureid,
             topic: item.topic,
@@ -108,7 +108,7 @@ class LectureScreen extends Component {
         <View style={{alignItems:'center', marginTop: wp('50%')}}>
           <Text>{this.state.routineTaleems.message}</Text>
           <TouchableOpacity onPress={() => this.onRefresh()}>
-            <Text>Refresh</Text>
+            <Text>Click to Refresh</Text>
           </TouchableOpacity>
         </View>
       )

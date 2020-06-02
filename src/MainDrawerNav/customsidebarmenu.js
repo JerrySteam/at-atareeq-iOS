@@ -59,7 +59,7 @@ export default class CustomSidebarMenu extends Component {
     ];
     this.state = {
       fullname: null,
-      photourl: null,
+      photourl: '',
       count: [],
       roleid: 0,
       favCount: 0,
@@ -123,8 +123,8 @@ export default class CustomSidebarMenu extends Component {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        paddingTop: 10,
-                        paddingBottom: 10,
+                        paddingTop: wp('3.5%'),
+                        paddingBottom: wp('3.5%'),
                         backgroundColor: 'transparent',
                         //backgroundColor: global.currentScreenIndex === key ? '#e0dbdb' : '#ffffff',
                       }}
@@ -136,7 +136,7 @@ export default class CustomSidebarMenu extends Component {
                       <Text
                         style={{
                           position: 'absolute', left: wp('15%'),
-                          fontSize: 15,
+                          fontSize: wp('4.17%'),
                           color: global.currentScreenIndex === key ? '#808080' : '#fff',
                         }}
                         onPress={() => {
@@ -176,7 +176,7 @@ export default class CustomSidebarMenu extends Component {
 
                       style={{
                         position: 'absolute', left: wp('15%'),
-                        fontSize: 15,
+                        fontSize: wp('4.17%'),
                         color: global.currentScreenIndex === key ? '#808080' : '#fff',
                       }}
                       onPress={() => {
@@ -216,35 +216,37 @@ export default class CustomSidebarMenu extends Component {
                       : null}
                   </View>
               ))}
+
+              <Divider />
+              <View style={{ width: '100%'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingTop: wp('3%'),
+                    paddingBottom: wp('3.5%'),
+                    backgroundColor: 'transparent',
+                  }}
+                >
+                  <View style={{ marginRight: 10, marginLeft: 20 }}>
+                    <Icon name='sign-out' size={23} color='#fff' type='font-awesome' />
+                  </View>
+                  <Text
+                    style={{
+                      position: 'absolute', left: wp('15%'), fontSize: wp('4.17%'), color: '#fff',
+                    }}
+                    onPress={() => {
+                      logout(this.props.navigation.navigate)
+                      //this.props.navigation.navigate('LoginNavigator');  
+                    }}
+                  >
+                    LOGOUT
+                  </Text>
+                </View>
+              </View>
             </ScrollView>
           </View>
-          <Divider />
-          <View style={{ width: '100%', marginTop: wp('5%') }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingTop: 10,
-                paddingBottom: 10,
-                backgroundColor: 'transparent',
-              }}
-            >
-              <View style={{ marginRight: 10, marginLeft: 20 }}>
-                <Icon name='sign-out' size={23} color='#fff' type='font-awesome' />
-              </View>
-              <Text
-                style={{
-                  position: 'absolute', left: wp('15%'), fontSize: 15, color: '#fff',
-                }}
-                onPress={() => {
-                  logout(this.props.navigation.navigate)
-                  //this.props.navigation.navigate('LoginNavigator');  
-                }}
-              >
-                LOGOUT
-            </Text>
-            </View>
-          </View>
+
         </View>
       </ImageBackground>
     );

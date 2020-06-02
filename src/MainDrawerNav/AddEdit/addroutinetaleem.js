@@ -4,13 +4,14 @@ import { Button, Input, Avatar, Icon } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import DatePicker from 'react-native-datepicker';
 import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 export default class AddRoutineTaleem extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isLoading: false,
-      photourl: null,
+      photourl: '',
       title: '',
       speaker: '',
       location: '',
@@ -60,7 +61,7 @@ export default class AddRoutineTaleem extends Component {
               selectedValue={this.state.weekday}
               placeholder="placeholder"
               leftIcon={{ type: 'font-awesome', name: 'lock', size: wp('5%'), color: 'gray' }}
-              style={{ height: hp('10%'), width: wp('92%'), borderColor: 'gray', color: '#000', marginTop: wp('0%') }}
+              style={{ width: wp('92%'), borderColor: 'gray', color: '#000', marginTop: wp('0%') }}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ weekday: itemValue })
               }>
@@ -181,24 +182,30 @@ export default class AddRoutineTaleem extends Component {
   }
 
   selectPhoto = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ photourl: result.uri });
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false,
+        aspect: [4, 4],
+        quality: 1
+      });
+  
+      console.log("Image Picker Log: " + result.uri);
+  
+      if (!result.cancelled) {
+        this.setState({ photourl: result.uri });
+      } else {
+        this.setState({ photourl: '' });
+      }
     } else {
-      this.setState({ photourl: null });
+      console.log('Camera permission not granted');
+      this.setState({ photourl: '' });
     }
   }
 
   deletePhoto = async () => {
-    this.setState({ photourl: null });
+    this.setState({ photourl: '' });
   }
 
   addRoutineTaleem = async () => {
@@ -242,7 +249,7 @@ export default class AddRoutineTaleem extends Component {
       formData.append('latitude', latitude)
       formData.append('longitude', longitude)
 
-      if (photourl !== null) {
+      if (photourl !== '') {
         const uriPart = photourl.split('.');
         const fileExtension = uriPart[uriPart.length - 1];
         let photoname = 'photo' + new Date().getTime();
@@ -279,7 +286,7 @@ export default class AddRoutineTaleem extends Component {
             weekday: '',
             time: '',
             briefinfo: '',
-            photourl: null,
+            photourl: '',
             latitude: 0,
             longitude: 0,
           })
@@ -307,7 +314,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

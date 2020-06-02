@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView from 'react-native-maps';
-import Polyline from '@mapbox/polyline';
-import * as Permissions from 'expo-permissions';
-import Geolocation from 'react-native-geolocation-service';
+//import Polyline from '@mapbox/polyline';
+//import * as Permissions from 'expo-permissions';
+//import Geolocation from 'react-native-geolocation-service';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 //just sublime: latitude, longtitude and destination title. Dont touch anything
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

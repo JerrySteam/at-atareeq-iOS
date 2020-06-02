@@ -3,6 +3,7 @@ import { StyleSheet, Image, View, KeyboardAvoidingView, ScrollView, Picker, Acti
 import { Button, Input, Card, Avatar } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -153,10 +154,10 @@ class EditProfile extends Component {
     );
   }
 
-  selectPhoto = async () => {
+  /* selectPhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 4],
       quality: 1
     });
@@ -166,12 +167,35 @@ class EditProfile extends Component {
     if (!result.cancelled) {
       this.setState({ photourl: result.uri });
     } else {
-      this.setState({ photourl: null });
+      this.setState({ photourl: '' });
+    }
+  } */
+
+  selectPhoto = async () => {
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false,
+        aspect: [4, 4],
+        quality: 1
+      });
+  
+      //console.log("Image Picker Log: " + result.uri);
+  
+      if (!result.cancelled) {
+        this.setState({ photourl: result.uri });
+      } else {
+        this.setState({ photourl: '' });
+      }
+    } else {
+      alert('Camera permission not granted');
+      this.setState({ photourl: '' });
     }
   }
 
   deletePhoto = async () => {
-    this.setState({ photourl: null });
+    this.setState({ photourl: '' });
   }
 
   isValidEmail(email) {
@@ -191,7 +215,7 @@ class EditProfile extends Component {
     const fullname = this.state.fullname.trim()
     const displayname = this.state.displayname.trim()
     const photourl = this.state.photourl
-
+    //alert("Going")
     if (fullname === "" || displayname === "") {
       alert("Please enter your full name and display name")
       this.setState({ isLoading: false })
@@ -199,7 +223,7 @@ class EditProfile extends Component {
       const apiurl = global.url + 'editprofile.php'
       const formData = new FormData()
 
-      if (photourl !== null) {
+      if (photourl !== '') {
         //Add your input data
         formData.append('userid', userid)
         formData.append('fullname', fullname)
@@ -221,27 +245,31 @@ class EditProfile extends Component {
         formData.append('photo', photourl)
       }
 
-      try {
-        const response = await fetch(apiurl, {
-          //handle post data
-          method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          body: formData
-        });
-
-        //const res = await response.text();
-        //console.log(res)
-        //this.setState({ isLoading: false })
-
-        const res = await response.json();
-        alert(res.message);
-        this.setState({ isLoading: false });
-      }
-      catch (err) {
-        return console.log(err);
-      }
+      setTimeout( async() => {
+        try {
+          const response = await fetch(apiurl, {
+            //handle post data
+            method: 'POST',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            body: formData
+          });
+          const res = await response.json();
+          if (res.success) {
+            this.setState({
+              fullname: this.state.fullname,
+              displayname: this.state.displayname,
+              photourl: this.state.photourl
+            })
+          }
+          alert(res.message);
+          this.setState({ isLoading: false });
+        }
+        catch (err) {
+          return console.log(err);
+        }
+      }, 100)
     }
   }
 
@@ -317,7 +345,7 @@ const styles = StyleSheet.create({
     borderRadius: wp('100%'),
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

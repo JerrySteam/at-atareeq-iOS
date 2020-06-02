@@ -1,0 +1,13 @@
+sans-serif-medium  =========== Helvetica Neue
+Roboto ============ Arial
+sans-serif-thin ============== Helvetica
+sans-serif-light ========= Helvetica-Light
+
+
+"name": "At-tareeq iOS",
+    "slug": "at-tareeq-ios",
+
+
+Changes made in the Attareeq Ios Folder
+1. photourl: null change to photourl: '' //replace 34 occurences accross 9 files
+2. photourl !== null change to photourl !== '' //replace 7 occurences accross 7 files

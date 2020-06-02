@@ -47,6 +47,7 @@ export default class ForgotPasswordScreen extends Component{
           <KeyboardAvoidingView style={styles.appContainer} behavior="padding" enabled>
             <Input
               placeholder='Please enter your email'
+              placeholderTextColor = 'gray'
               leftIcon={{type: 'font-awesome', name:'envelope', size:wp('5%'), color:'gray' }}
               inputStyle={{color: '#fff', paddingHorizontal: wp('2%'), fontSize: wp('4.5%'),}}
               containerStyle={{width: wp('83%'), marginTop:wp('14%')}}
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   loginButtonTitle:{
-    fontFamily:'Roboto', 
+    fontFamily:'Arial', 
     color:'#fff',
   },
   loginButton: {

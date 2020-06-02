@@ -4,13 +4,14 @@ import { Button, Input, Avatar, Icon } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import DatePicker from 'react-native-datepicker';
 import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 export default class AddSpecialLecture extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isLoading: false,
-      photourl: null,
+      photourl: '',
       title: '',
       speaker: '',
       location: '',
@@ -81,7 +82,7 @@ export default class AddSpecialLecture extends Component {
               value={this.state.location}
             />
             <DatePicker
-              style={{ width: wp('90%'), marginTop: wp('5%')}}
+              style={{ width: wp('90%'), marginTop: wp('5%') }}
               date={this.state.date}
               mode="date"
               iconComponent={<Icon name='calendar-o' type='font-awesome' color='#e2e2e2' />}
@@ -106,7 +107,7 @@ export default class AddSpecialLecture extends Component {
               onDateChange={(date) => { this.setState({ date: date }) }}
             />
             <DatePicker
-              style={{ width: wp('90%'), marginTop: wp('5%')}}
+              style={{ width: wp('90%'), marginTop: wp('5%') }}
               date={this.state.starttime}
               mode="time"
               iconComponent={<Icon name='clock-o' type='font-awesome' color='#e2e2e2' />}
@@ -131,7 +132,7 @@ export default class AddSpecialLecture extends Component {
               onDateChange={(time) => { this.setState({ starttime: time }) }}
             />
             <DatePicker
-              style={{ width: wp('90%'), marginTop: wp('5%')}}
+              style={{ width: wp('90%'), marginTop: wp('5%') }}
               date={this.state.endtime}
               mode="time"
               iconComponent={<Icon name='clock-o' type='font-awesome' color='#e2e2e2' />}
@@ -189,24 +190,30 @@ export default class AddSpecialLecture extends Component {
   }
 
   selectPhoto = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ photourl: result.uri });
+    const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false,
+        aspect: [4, 4],
+        quality: 1
+      });
+  
+      console.log("Image Picker Log: " + result.uri);
+  
+      if (!result.cancelled) {
+        this.setState({ photourl: result.uri });
+      } else {
+        this.setState({ photourl: '' });
+      }
     } else {
-      this.setState({ photourl: null });
+      console.log('Camera permission not granted');
+      this.setState({ photourl: '' });
     }
   }
 
   deletePhoto = async () => {
-    this.setState({ photourl: null });
+    this.setState({ photourl: '' });
   }
 
   addSpecialLecture = async () => {
@@ -227,7 +234,7 @@ export default class AddSpecialLecture extends Component {
       speaker === "" ||
       location === "" ||
       date === null ||
-      starttime === null  
+      starttime === null
     ) {
       alert("Please enter all required fields")
       this.setState({ isLoading: false })
@@ -250,7 +257,7 @@ export default class AddSpecialLecture extends Component {
       formData.append('latitude', latitude)
       formData.append('longitude', longitude)
 
-      if (photourl !== null) {
+      if (photourl !== '') {
         const uriPart = photourl.split('.');
         const fileExtension = uriPart[uriPart.length - 1];
         let photoname = 'photo' + new Date().getTime();
@@ -287,7 +294,7 @@ export default class AddSpecialLecture extends Component {
             date: null,
             time: '',
             briefinfo: '',
-            photourl: null,
+            photourl: '',
             latitude: 0,
             longitude: 0,
           })
@@ -315,7 +322,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   loginButtonTitle: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Arial',
     color: '#fff',
   },
   loginButton: {

@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "At-tareeq",
-    "slug": "At-tareeq",
+    "name": "At-tareeq-iOS",
+    "slug": "At-tareeq-iOS",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
-    "android":{
-      "package": "com.hochenmu.attareeq",
+    "android": {
+      "package": "com.hochenmu.attareeqios",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyByKge0hMAWkkHSXBJPyE4mg8DabFaGYnY"
@@ -17,17 +16,17 @@
       },
       "versionCode": 1,
       "permissions": [
-	      "CAMERA",
+        "CAMERA",
         "WRITE_EXTERNAL_STORAGE",
         "ACCESS_FINE_LOCATION"
-    	] 
+      ]
     },
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -42,8 +41,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hochenmu.attareeqios",
+      "buildNumber": "1.0.1",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "For choosing a photo.",
+        "NSCameraUsageDescription": "For taking a photo.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "For location."
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
-    "description": ""
+    "description": "",
+    "facebookScheme": "fb2686580851427611",
+    "facebookAppId": "2686580851427611",
+    "facebookDisplayName": "At-tareeq"
   }
 }
