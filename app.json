@@ -43,11 +43,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hochenmu.attareeqios",
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "For choosing a photo.",
-        "NSCameraUsageDescription": "For taking a photo.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "For location."
+        "NSPhotoLibraryUsageDescription": "At-tareeq iOS App would like to access your photo gallery for a profile photo upload.",
+        "NSCameraUsageDescription": "At-tareeq iOS App would like to use your camera for taking a profile photo for upload.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "At-tareeq iOS App would like to access your location for mosque description."
       },
       "config": {
         "usesNonExemptEncryption": false
